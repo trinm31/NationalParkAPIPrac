@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NationalParkAPI.Data;
+using NationalParkAPI.Mapper;
+using NationalParkAPI.Repository;
+using NationalParkAPI.Repository.IRepository;
 
 namespace NationalParkAPI
 {
@@ -30,6 +34,8 @@ namespace NationalParkAPI
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<INationalParkRepository, NationalParkRepository>();
+            services.AddAutoMapper(typeof(Mappings));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -1,15 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NationalParkAPI.Models
+namespace NationalParkAPI.Models.Dtos
 {
-    public class NationalPark
+    public class NationalParkDto
     {
-        [Key] 
         public int Id { get; set; }
-        [Required] 
+        [Required]
         public string Name { get; set; }
-        [Required] 
+        [Required]
         public string State { get; set; }
         public DateTime Created { get; set; }
         public DateTime Established { get; set; }
