@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +41,10 @@ namespace NationalParkAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "NationalParkAPI", Version = "v1"});
+                c.SwaggerDoc("NationalParkAPI", new OpenApiInfo {Title = "NationalParkAPI", Version = "v1"});
+                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var cmlCommentFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+                c.IncludeXmlComments(cmlCommentFullPath);
             });
         }
 
@@ -49,8 +54,12 @@ namespace NationalParkAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NationalParkAPI v1"));
+                app.UseSwagger(); 
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/NationalParkAPI/swagger.json", "NationalParkAPI v1");
+                    c.RoutePrefix = "";
+                });
             }
 
             app.UseHttpsRedirection();

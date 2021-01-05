@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NationalParkAPI.Models;
 using NationalParkAPI.Models.Dtos;
@@ -21,7 +22,13 @@ namespace NationalParkAPI.Controllers
             _nationalParkRepository = nationalParkRepository;
             _mapper = mapper;
         }
+        /// <summary>
+        /// Get list of national park
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
+        [ProducesResponseType(400)]
         public IActionResult GetNationalParks()
         {
             var objList = _nationalParkRepository.GetNationalPark();
@@ -32,8 +39,16 @@ namespace NationalParkAPI.Controllers
             }
             return Ok(objDto);
         }
-
+        /// <summary>
+        /// Get individual national park
+        /// </summary>
+        /// <param name="nationalParkId">The id of national park</param>
+        /// <returns></returns>
         [HttpGet("{nationalParkId:int}", Name = "GetNationalPark")]
+        [ProducesResponseType(200, Type = typeof(NationalParkDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesDefaultResponseType]
         public IActionResult GetNationalPark(int nationalParkId)
         {
             var obj = _nationalParkRepository.GetNationalPark(nationalParkId);
@@ -47,6 +62,10 @@ namespace NationalParkAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(NationalParkDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public IActionResult CreateNationalPark([FromBody] NationalParkDto nationalParkDto)
         {
             if (nationalParkDto == null)
@@ -71,6 +90,10 @@ namespace NationalParkAPI.Controllers
         }
 
         [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
+        [ProducesResponseType(204, Type = typeof(NationalParkDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult UpdateNationalPark(int nationalParkId,[FromBody] NationalParkDto nationalParkDto)
         {
             if (nationalParkDto == null || nationalParkId != nationalParkDto.Id)
@@ -88,6 +111,10 @@ namespace NationalParkAPI.Controllers
         }
 
         [HttpDelete("{nationalParkId:int}", Name = "DeleteNationalPark")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteNationalPark(int nationalParkId)
         {
             if (!_nationalParkRepository.NationalParkExist(nationalParkId))
