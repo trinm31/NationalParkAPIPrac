@@ -8,8 +8,10 @@ using NationalParkAPI.Repository.IRepository;
 
 namespace NationalParkAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/trails")]
     [ApiController]
+    // [ApiExplorerSettings(GroupName = "NationalParkAPITrails")]
     public class TrailsController : Controller
     {
 
@@ -58,6 +60,29 @@ namespace NationalParkAPI.Controllers
             }
 
             var objDto = _mapper.Map<TrailDto>(obj);
+            return Ok(objDto);
+        }
+        
+        [HttpGet("[action]/{nationalId:int}")]
+        [ProducesResponseType(200, Type = typeof(TrailDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesDefaultResponseType]
+        public IActionResult GetTrailInNationalPark(int nationalId)
+        {
+            var objList = _trailRepository.GetTrailInNationalPark(nationalId);
+            
+            if (objList == null)
+            {
+                return NotFound();
+            }
+
+            var objDto = new List<TrailDto>();
+            foreach (var obj in objList)
+            {
+                objDto.Add(_mapper.Map<TrailDto>(obj));
+            }
+            
             return Ok(objDto);
         }
         

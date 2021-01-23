@@ -8,8 +8,10 @@ using NationalParkAPI.Repository.IRepository;
 
 namespace NationalParkAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/nationalparks")]
+    //[Route("api/[Controller]")]
     [ApiController]
+    // [ApiExplorerSettings(GroupName = "NationalParkAPINP")]
     public class NationalParksController : Controller
     {
 
@@ -86,7 +88,7 @@ namespace NationalParkAPI.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return CreatedAtRoute("GetNationalPark", new {nationalParkId = ojbNationalPark.Id}, ojbNationalPark);
+            return CreatedAtRoute("GetNationalPark", new {version = HttpContext.GetRequestedApiVersion().ToString(),nationalParkId = ojbNationalPark.Id}, ojbNationalPark);
         }
 
         [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
