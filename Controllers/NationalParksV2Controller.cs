@@ -13,7 +13,7 @@ namespace NationalParkAPI.Controllers
     [ApiVersion("2.0")]
     [ApiController]
     // [ApiExplorerSettings(GroupName = "NationalParkAPINP")]
-    public class NationalParksV2Controller : Controller
+    public class NationalParksV2Controller : ControllerBase
     {
 
         private INationalParkRepository _nationalParkRepository;

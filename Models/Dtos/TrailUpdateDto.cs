@@ -14,5 +14,7 @@ namespace NationalParkAPI.Models.Dtos
         public DifficultyType Difficulty { get; set; }
         [Required] 
         public int NationalParkId { get; set; }
+        [Required]
+        public double Elevation { get; set; }
     }
 }

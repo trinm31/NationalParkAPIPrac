@@ -28,4 +28,20 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="WebApplication\Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\Views\_ViewStart.cshtml" />
+      <_ContentIncludedByDefault Remove="WebApplication\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="WebApplication\appsettings.json" />
+      <_ContentIncludedByDefault Remove="WebApplication\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="WebApplication\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="WebApplication\obj\WebApplication.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="WebApplication\Properties\launchSettings.json" />
+    </ItemGroup>
+
 </Project>

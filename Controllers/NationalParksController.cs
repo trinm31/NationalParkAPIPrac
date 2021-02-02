@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NationalParkAPI.Models;
@@ -12,7 +13,7 @@ namespace NationalParkAPI.Controllers
     //[Route("api/[Controller]")]
     [ApiController]
     // [ApiExplorerSettings(GroupName = "NationalParkAPINP")]
-    public class NationalParksController : Controller
+    public class NationalParksController : ControllerBase
     {
 
         private INationalParkRepository _nationalParkRepository;
@@ -96,6 +97,7 @@ namespace NationalParkAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public IActionResult UpdateNationalPark(int nationalParkId,[FromBody] NationalParkDto nationalParkDto)
         {
             if (nationalParkDto == null || nationalParkId != nationalParkDto.Id)

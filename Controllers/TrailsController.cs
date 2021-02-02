@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NationalParkAPI.Models;
@@ -12,7 +13,7 @@ namespace NationalParkAPI.Controllers
     [Route("api/v{version:apiVersion}/trails")]
     [ApiController]
     // [ApiExplorerSettings(GroupName = "NationalParkAPITrails")]
-    public class TrailsController : Controller
+    public class TrailsController : ControllerBase
     {
 
         private ITrailRepository _trailRepository;
@@ -51,6 +52,7 @@ namespace NationalParkAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetTrail(int trailId)
         {
             var obj = _trailRepository.GetTrail(trailId);
